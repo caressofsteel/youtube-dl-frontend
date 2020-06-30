@@ -32,11 +32,12 @@ echo.
 	echo [ 2 ] - Video (MP4)
 	echo [ 3 ] - Video (Best, MP4)
 	echo [ 4 ] - Video (Choose Format)
-	echo [ 5 ] - Channel (MP4)
-	echo [ 6 ] - Playlist (MP3)
-	echo [ 7 ] - Time Span (MP4)
-	echo [ 8 ] - Video (Proxy, Best, MP4)
-	echo [ 9 ] - Update YouTube-DL
+	echo [ 5 ] - Channel (Video, MP4)
+	echo [ 6 ] - Playlist (Audio, MP3)
+	echo [ 7 ] - Playlist (Video, MP4)
+	echo [ 8 ] - Time Span (Video, MP4)
+	echo [ 9 ] - Video (Proxy, Best, MP4)
+	echo [ 0 ] - Update YouTube-DL
 	echo.
 echo ########################################################################################
 echo.
@@ -48,9 +49,10 @@ if "%menu%"=="3" (goto download_video_best)
 if "%menu%"=="4" (goto download_video_format)
 if "%menu%"=="5" (goto download_channel)
 if "%menu%"=="6" (goto download_playlist)
-if "%menu%"=="7" (goto download_timespan)
-if "%menu%"=="8" (goto download_video_best_proxy)
-if "%menu%"=="9" (goto update)
+if "%menu%"=="7" (goto download_playlist_video)
+if "%menu%"=="8" (goto download_timespan)
+if "%menu%"=="9" (goto download_video_best_proxy)
+if "%menu%"=="0" (goto update)
 if "%menu%"=="" (goto menu)
 
 
@@ -134,9 +136,9 @@ REM ############################################################################
 
 :download_playlist
 cls
-ECHO [ YouTube-DL Playlist (MP3) ]
+ECHO [ YouTube-DL Playlist (MP3, Audio) ]
 echo.
-set /P url="Enter Playlist ID or URL: "
+set /P url="Enter Audio Playlist ID or URL: "
 youtube-dl --rm-cache-dir -ciw -o "Z:\Music\!NewMusic\%%(playlist_index)s - %%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --yes-playlist "%url%"
 pause
 goto menu
@@ -146,17 +148,39 @@ REM ############################################################################
 REM [- 7 -]
 REM ########################################################################################
 
-:download_timespan
+:download_playlist_video
 cls
-ECHO [ YouTube-DL TimeSpan (MP4) ]
+ECHO [ YouTube-DL Playlist (MP4, Video) ]
 echo.
-set /P url="Enter Video URL: "
+set /P url="Enter Video Playlist ID or URL: "
+
+youtube-dl.exe --rm-cache-dir -ciw -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "D:\Downloads\YouTubeDL\%%(playlist_index)s - %%(title)s.%%(ext)s" --download-archive "D:\Video\Project\YouTubeDL\downloaded.txt" -v --yes-playlist "%url%"
 
 pause
 goto menu
 
+
 REM ########################################################################################
 REM [- 8 -]
+REM ########################################################################################
+
+:download_timespan
+cls
+ECHO [ YouTube-DL TimeSpan (MP4) ]
+echo.
+REM set /P url="Enter Timespan Video URL: "
+REM set /P time_start="Enter Start Time: "
+REM set /P time_end="Enter End Time: "
+
+echo Not Yet Implemented
+echo.
+
+pause
+goto menu
+
+
+REM ########################################################################################
+REM [- 9 -]
 REM ########################################################################################
 
 :download_video_best_proxy
@@ -170,7 +194,7 @@ goto menu
 
 
 REM ########################################################################################
-REM [- 9 -]
+REM [- 0 -]
 REM ########################################################################################
 
 :update
