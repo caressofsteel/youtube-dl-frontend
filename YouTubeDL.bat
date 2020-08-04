@@ -1,7 +1,7 @@
 
 @echo off
 
-REM ########################################################################
+REM #########################################################################################
 REM
 REM    ______                          ____  _________ __            __
 REM   / ____/___ _________  __________/ __ \/ __/ ___// /____  ___  / /
@@ -11,12 +11,13 @@ REM \____/\__,_/_/   \___/____/____/\____/_/  /____/\__/\___/\___/_/
 REM
 REM
 REM
-REM ########################################################################
+REM #########################################################################################
 REM
 REM YouTube-DL Front-End
-REM	Tested with .EXE version 2020/01/24
-REM
-REM ########################################################################
+REM	Binary located in C:\Apps\Liberkey\MyApps\YouTubeDL
+REM #########################################################################################
+
+SET VERSION=2020/06/16 (WEBP Fix #25717)
 
 cls
 goto menu
@@ -24,7 +25,7 @@ goto menu
 :menu
 cls
 echo.
-echo  .: YouTube-DL :.
+echo  .: YouTube-DL v%VERSION% :.
 echo.        
 echo ### CHOOSE FORMAT ######################################################################
 echo.         
@@ -57,6 +58,27 @@ if "%menu%"=="" (goto menu)
 
 
 REM ########################################################################################
+REM [- 0 -]
+REM ########################################################################################
+
+:update
+cls
+ECHO [ YouTube-DL (UPDATE) ]
+echo.
+
+youtube-dl.exe -U
+REM pip install --upgrade youtube-dl
+REM copy /y C:\Apps\Python\Scripts\youtube-dl.exe C:\Apps\LiberKey\MyApps\YouTubeDL\
+REM copy /y C:\Apps\Python\Scripts\youtube-dl-script.py C:\Apps\LiberKey\MyApps\YouTubeDL\
+
+REM 2020-08-04: WEBPFix: https://github.com/ytdl-org/youtube-dl.git@refs/pull/25717/head
+REM pip install git+https://github.com/ytdl-org/youtube-dl.git@refs/pull/25717/head
+
+pause
+goto menu
+
+
+REM ########################################################################################
 REM [- 1 -]
 REM ########################################################################################
 
@@ -65,7 +87,7 @@ cls
 ECHO [ YouTube-DL Audio ]
 echo.
 set /P url="Enter Audio URL: "
-youtube-dl.exe -ciw -o "Z:\Music\!NewMusic\%%(title)s.%%(ext)s" -x --audio-format mp3 --rm-cache-dir --embed-thumbnail %url%
+youtube-dl.exe -ciw -o "Z:\Music\!NewMusic\%%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --rm-cache-dir %url%
 pause
 goto menu
 
@@ -189,20 +211,5 @@ ECHO [ YouTube-DL (Proxy, 4K, MP4) ]
 echo.
 set /P url="Enter Video URL: "
 youtube-dl.exe --rm-cache-dir -ciw --proxy socks5://10.10.10.1:1080 --format "bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
-pause
-goto menu
-
-
-REM ########################################################################################
-REM [- 0 -]
-REM ########################################################################################
-
-:update
-cls
-ECHO [ YouTube-DL (UPDATE) ]
-echo.
-
-youtube-dl.exe -U
-
 pause
 goto menu
