@@ -17,7 +17,7 @@ REM YouTube-DL Front-End
 REM	Binary located in C:\Apps\Liberkey\MyApps\YouTubeDL
 REM #########################################################################################
 
-SET VERSION=2020/06/16 (WEBP Fix #25717)
+SET VERSION=2020/11/16 (STILL ROCKIN' - FUCK THE RIAA)
 
 cls
 goto menu
@@ -38,7 +38,7 @@ echo.
 	echo [ 7 ] - Playlist (Video, MP4)
 	echo [ 8 ] - Time Span (Video, MP4)
 	echo [ 9 ] - Video (Proxy, Best, MP4)
-	echo [ 0 ] - Update YouTube-DL
+	echo [ 0 ] - Update YouTube-DL (Python)
 	echo.
 echo ########################################################################################
 echo.
@@ -63,7 +63,7 @@ REM ############################################################################
 
 :update
 cls
-ECHO [ YouTube-DL (UPDATE) ]
+ECHO [ YouTube-DL (Python UPDATE) ]
 echo.
 
 :: Regular Update
