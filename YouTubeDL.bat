@@ -150,7 +150,7 @@ cls
 ECHO [ YouTube-DL Channel (MP4) ]
 echo.
 set /P url="Enter Channel URL: "
-youtube-dl.exe --rm-cache-dir -ciw -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "D:\Video\Project\YouTubeDL\%%(title)s.%%(ext)s" --download-archive "D:\Video\Project\YouTubeDL\downloaded.txt" -v %url%
+youtube-dl.exe --rm-cache-dir -ciw -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "D:\Temp\YouTubeDL\%%(title)s.%%(ext)s" --download-archive "D:\Temp\YouTubeDL\downloaded.txt" -v %url%
 pause
 goto menu
 
@@ -179,7 +179,7 @@ ECHO [ YouTube-DL Playlist (MP4, Video) ]
 echo.
 set /P url="Enter Video Playlist ID or URL: "
 
-youtube-dl.exe --rm-cache-dir -ciw -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "D:\Downloads\YouTubeDL\%%(playlist_index)s - %%(title)s.%%(ext)s" --download-archive "D:\Video\Project\YouTubeDL\downloaded.txt" -v --yes-playlist "%url%"
+youtube-dl.exe --rm-cache-dir -ciw -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "D:\Downloads\YouTubeDL\%%(playlist_index)s - %%(title)s.%%(ext)s" --download-archive "D:\Temp\YouTubeDL\downloaded.txt" -v --yes-playlist "%url%"
 
 pause
 goto menu
