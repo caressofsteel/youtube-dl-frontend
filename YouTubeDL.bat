@@ -15,9 +15,10 @@ REM ############################################################################
 REM
 REM YouTube-DL Front-End
 REM	Binary located in C:\Apps\Liberkey\MyApps\YouTubeDL
+REM	Python: C:\Users\David\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages
 REM #########################################################################################
 
-SET VERSION=2020/11/16 (STILL ROCKIN' - FUCK THE RIAA)
+SET VERSION=2021/10/08 (STILL ROCKIN' - FUCK THE RIAA)
 
 cls
 goto menu
@@ -71,8 +72,10 @@ rem youtube-dl.exe -U
 
 :: Python Update
 pip install --upgrade youtube-dl
-copy /y C:\Apps\Python\Scripts\youtube-dl.exe C:\Apps\LiberKey\MyApps\YouTubeDL\
-copy /y C:\Apps\Python\Scripts\youtube-dl-script.py C:\Apps\LiberKey\MyApps\YouTubeDL\
+copy /y C:\Users\David\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\Scripts\youtube-dl.exe C:\Apps\LiberKey\MyApps\YouTubeDL\
+
+rem copy /y C:\Apps\Python\Scripts\youtube-dl.exe C:\Apps\LiberKey\MyApps\YouTubeDL\
+rem copy /y C:\Apps\Python\Scripts\youtube-dl-script.py C:\Apps\LiberKey\MyApps\YouTubeDL\
 
 REM 2020-08-04: WEBPFix: https://github.com/ytdl-org/youtube-dl.git@refs/pull/25717/head
 REM pip install git+https://github.com/ytdl-org/youtube-dl.git@refs/pull/25717/head
