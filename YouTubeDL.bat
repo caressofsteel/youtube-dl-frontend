@@ -18,7 +18,7 @@ REM	Binary located in C:\Apps\Liberkey\MyApps\YouTubeDL
 REM	Python: C:\Users\David\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages
 REM #########################################################################################
 
-SET VERSION=2021/10/08 (STILL ROCKIN' - FUCK THE RIAA)
+SET VERSION=2022/03/12 (STILL ROCKIN' - FUCK THE RIAA/DMCA)
 
 cls
 goto menu
@@ -68,17 +68,14 @@ ECHO [ YouTube-DL (Python UPDATE) ]
 echo.
 
 :: Regular Update
-rem youtube-dl.exe -U
+yt-dlp.exe -U
 
 :: Python Update
-pip install --upgrade youtube-dl
-copy /y C:\Users\David\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\Scripts\youtube-dl.exe C:\Apps\LiberKey\MyApps\YouTubeDL\
+REM pip install --upgrade youtube-dl
+REM copy /y C:\Users\David\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\Scripts\yt-dlp.exe C:\Apps\LiberKey\MyApps\YouTubeDL\
 
-rem copy /y C:\Apps\Python\Scripts\youtube-dl.exe C:\Apps\LiberKey\MyApps\YouTubeDL\
-rem copy /y C:\Apps\Python\Scripts\youtube-dl-script.py C:\Apps\LiberKey\MyApps\YouTubeDL\
-
-REM 2020-08-04: WEBPFix: https://github.com/ytdl-org/youtube-dl.git@refs/pull/25717/head
-REM pip install git+https://github.com/ytdl-org/youtube-dl.git@refs/pull/25717/head
+copy /y C:\Apps\node\yt-dlp.exe C:\Apps\LiberKey\MyApps\YouTubeDL\
+REM copy /y C:\Apps\Python\Scripts\youtube-dl-script.py C:\Apps\LiberKey\MyApps\YouTubeDL\
 
 pause
 goto menu
@@ -93,7 +90,8 @@ cls
 ECHO [ YouTube-DL Audio ]
 echo.
 set /P url="Enter Audio URL: "
-youtube-dl.exe -ciw -o "Z:\Music\!NewMusic\%%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --rm-cache-dir %url%
+REM yt-dlp.exe -ciw -o "Z:\Music\!NewMusic\%%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --rm-cache-dir %url%
+yt-dlp.exe -ciw -o "Z:\Music\!NewMusic\%%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --rm-cache-dir %url%
 pause
 goto menu
 
@@ -107,7 +105,7 @@ cls
 ECHO [ YouTube-DL Video ]
 echo.
 set /P url="Enter Video URL: "
-youtube-dl.exe --rm-cache-dir -ciw -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
+yt-dlp.exe --rm-cache-dir -ciw -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
 pause
 goto menu
 
@@ -121,7 +119,7 @@ cls
 ECHO [ YouTube-DL (4K, MP4) ]
 echo.
 set /P url="Enter Video URL: "
-youtube-dl.exe --rm-cache-dir -ciw --format "bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
+yt-dlp.exe --rm-cache-dir -ciw --format "bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
 pause
 goto menu
 
@@ -135,11 +133,11 @@ cls
 ECHO [ YouTube-DL Video (Choose Format) ]
 echo.
 set /P url="Enter Video URL: "
-youtube-dl.exe -F %url%
+yt-dlp.exe -F %url%
 pause
 set /p vformat="Enter Video Code: "
 set /p aformat="Enter Audio Code: "
-youtube-dl.exe --rm-cache-dir -ciw -f "%vformat%+%aformat%" --download-archive D:\Downloads\downloaded.txt --merge-output-format mp4 -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
+yt-dlp.exe --rm-cache-dir -ciw -f "%vformat%+%aformat%" --download-archive D:\Downloads\downloaded.txt --merge-output-format mp4 -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
 pause
 goto menu
 
@@ -153,7 +151,7 @@ cls
 ECHO [ YouTube-DL Channel (MP4) ]
 echo.
 set /P url="Enter Channel URL: "
-youtube-dl.exe --rm-cache-dir -ciw -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "D:\Temp\YouTubeDL\%%(title)s.%%(ext)s" --download-archive "D:\Temp\YouTubeDL\downloaded.txt" -v %url%
+yt-dlp.exe --rm-cache-dir -ciw -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "D:\Temp\YouTubeDL\%%(title)s.%%(ext)s" --download-archive "D:\Temp\YouTubeDL\downloaded.txt" -v %url%
 pause
 goto menu
 
@@ -182,7 +180,7 @@ ECHO [ YouTube-DL Playlist (MP4, Video) ]
 echo.
 set /P url="Enter Video Playlist ID or URL: "
 
-youtube-dl.exe --rm-cache-dir -ciw -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "D:\Downloads\YouTubeDL\%%(playlist_index)s - %%(title)s.%%(ext)s" --download-archive "D:\Temp\YouTubeDL\downloaded.txt" -v --yes-playlist "%url%"
+yt-dlp.exe --rm-cache-dir -ciw -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "D:\Downloads\YouTubeDL\%%(playlist_index)s - %%(title)s.%%(ext)s" --download-archive "D:\Temp\YouTubeDL\downloaded.txt" -v --yes-playlist "%url%"
 
 pause
 goto menu
@@ -216,6 +214,6 @@ cls
 ECHO [ YouTube-DL (Proxy, 4K, MP4) ]
 echo.
 set /P url="Enter Video URL: "
-youtube-dl.exe --rm-cache-dir -ciw --proxy socks5://10.10.10.1:1080 --format "bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
+yt-dlp.exe --rm-cache-dir -ciw --proxy socks5://185.206.224.39:80 --format "bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
 pause
 goto menu
