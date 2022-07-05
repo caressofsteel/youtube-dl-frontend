@@ -90,7 +90,6 @@ cls
 ECHO [ YouTube-DL Audio ]
 echo.
 set /P url="Enter Audio URL: "
-REM yt-dlp.exe -ciw -o "Z:\Music\!NewMusic\%%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --rm-cache-dir %url%
 yt-dlp.exe -ciw -o "Z:\Music\!NewMusic\%%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --rm-cache-dir %url%
 pause
 goto menu
@@ -181,6 +180,8 @@ echo.
 set /P url="Enter Video Playlist ID or URL: "
 
 yt-dlp.exe --rm-cache-dir -ciw -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "D:\Downloads\YouTubeDL\%%(playlist_index)s - %%(title)s.%%(ext)s" --download-archive "D:\Temp\YouTubeDL\downloaded.txt" -v --yes-playlist "%url%"
+
+REM yt-dlp.exe --rm-cache-dir -ciw -S res:720 -S ext:mp4 -o "D:\Downloads\YouTubeDL\%%(playlist_index)s - %%(title)s.%%(ext)s" --download-archive "D:\Temp\YouTubeDL\downloaded.txt" -v --yes-playlist "%url%"
 
 pause
 goto menu
