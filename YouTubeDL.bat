@@ -13,7 +13,7 @@ REM
 REM
 REM #########################################################################################
 REM
-REM YouTube-DL Front-End
+REM YouTube-DLPP Front-End
 REM	Binary located in C:\Apps\Liberkey\MyApps\YouTubeDL
 REM	Python: C:\Users\David\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages
 REM #########################################################################################
@@ -26,7 +26,7 @@ goto menu
 :menu
 cls
 echo.
-echo  .: YouTube-DL v%VERSION% :.
+echo  .: YouTube-DLP v%VERSION% :.
 echo.        
 echo ### CHOOSE FORMAT ######################################################################
 echo.         
@@ -39,7 +39,7 @@ echo.
 	echo [ 7 ] - Playlist (Video, MP4)
 	echo [ 8 ] - Time Span (Video, MP4)
 	echo [ 9 ] - Video (Proxy, Best, MP4)
-	echo [ 0 ] - Update YouTube-DL (Python)
+	echo [ 0 ] - Update YouTube-DLP (Python)
 	echo.
 echo ########################################################################################
 echo.
@@ -64,18 +64,18 @@ REM ############################################################################
 
 :update
 cls
-ECHO [ YouTube-DL (Python UPDATE) ]
+ECHO [ YouTube-DLP (Python UPDATE) ]
 echo.
 
 :: Regular Update
 yt-dlp.exe -U
 
 :: Python Update
-REM pip install --upgrade youtube-dl
+REM pip install --upgrade YouTube-DLP
 REM copy /y C:\Users\David\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\Scripts\yt-dlp.exe C:\Apps\LiberKey\MyApps\YouTubeDL\
 
 copy /y C:\Apps\node\yt-dlp.exe C:\Apps\LiberKey\MyApps\YouTubeDL\
-REM copy /y C:\Apps\Python\Scripts\youtube-dl-script.py C:\Apps\LiberKey\MyApps\YouTubeDL\
+REM copy /y C:\Apps\Python\Scripts\YouTube-DLP-script.py C:\Apps\LiberKey\MyApps\YouTubeDL\
 
 pause
 goto menu
@@ -87,7 +87,7 @@ REM ############################################################################
 
 :download_audio
 cls
-ECHO [ YouTube-DL Audio ]
+ECHO [ YouTube-DLP Audio ]
 echo.
 set /P url="Enter Audio URL: "
 yt-dlp.exe -ciw -o "Z:\Music\!NewMusic\%%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --rm-cache-dir %url%
@@ -101,7 +101,7 @@ REM ############################################################################
 
 :download_video
 cls
-ECHO [ YouTube-DL Video ]
+ECHO [ YouTube-DLP Video ]
 echo.
 set /P url="Enter Video URL: "
 yt-dlp.exe --rm-cache-dir -ciw -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
@@ -115,7 +115,7 @@ REM ############################################################################
 
 :download_video_best
 cls
-ECHO [ YouTube-DL (4K, MP4) ]
+ECHO [ YouTube-DLP (4K, MP4) ]
 echo.
 set /P url="Enter Video URL: "
 yt-dlp.exe --rm-cache-dir -ciw --format "bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
@@ -129,7 +129,7 @@ REM ############################################################################
 
 :download_video_format
 cls
-ECHO [ YouTube-DL Video (Choose Format) ]
+ECHO [ YouTube-DLP Video (Choose Format) ]
 echo.
 set /P url="Enter Video URL: "
 yt-dlp.exe -F %url%
@@ -147,7 +147,7 @@ REM ############################################################################
 
 :download_channel
 cls
-ECHO [ YouTube-DL Channel (MP4) ]
+ECHO [ YouTube-DLP Channel (MP4) ]
 echo.
 set /P url="Enter Channel URL: "
 yt-dlp.exe --rm-cache-dir -ciw -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "D:\Temp\YouTubeDL\%%(title)s.%%(ext)s" --download-archive "D:\Temp\YouTubeDL\downloaded.txt" -v %url%
@@ -161,10 +161,10 @@ REM ############################################################################
 
 :download_playlist
 cls
-ECHO [ YouTube-DL Playlist (MP3, Audio) ]
+ECHO [ YouTube-DLP Playlist (MP3, Audio) ]
 echo.
 set /P url="Enter Audio Playlist ID or URL: "
-youtube-dl --rm-cache-dir -ciw -o "Z:\Music\!NewMusic\%%(playlist_index)s - %%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --yes-playlist "%url%"
+YouTube-DLP --rm-cache-dir -ciw -o "Z:\Music\!NewMusic\%%(playlist_index)s - %%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --yes-playlist "%url%"
 pause
 goto menu
 
@@ -175,7 +175,7 @@ REM ############################################################################
 
 :download_playlist_video
 cls
-ECHO [ YouTube-DL Playlist (MP4, Video) ]
+ECHO [ YouTube-DLP Playlist (MP4, Video) ]
 echo.
 set /P url="Enter Video Playlist ID or URL: "
 
@@ -193,14 +193,14 @@ REM ############################################################################
 
 :download_timespan
 cls
-ECHO [ YouTube-DL TimeSpan (MP4) ]
+ECHO [ YouTube-DLP TimeSpan (MP4) ]
 echo.
-REM set /P url="Enter Timespan Video URL: "
-REM set /P time_start="Enter Start Time: "
-REM set /P time_end="Enter End Time: "
+set /P url="Enter Timespan Video URL: "
+set /P time_start="Enter Start Time: "
+set /P time_end="Enter End Time: "
 
-echo Not Yet Implemented
 echo.
+yt-dlp.exe --rm-cache-dir -ciw --format "bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 --download-sections "*%time_start%-%time_end%" -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
 
 pause
 goto menu
@@ -212,9 +212,11 @@ REM ############################################################################
 
 :download_video_best_proxy
 cls
-ECHO [ YouTube-DL (Proxy, 4K, MP4) ]
+ECHO [ YouTube-DLP (Proxy, 4K, MP4) ]
 echo.
+
 set /P url="Enter Video URL: "
 yt-dlp.exe --rm-cache-dir -ciw --proxy socks5://185.206.224.39:80 --format "bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
+
 pause
 goto menu

@@ -1,4 +1,4 @@
-# YouTube-DL Front-End
+# YouTube-DLP Front-End
 
 <p align="center">
   <img src="images/youtubedl.jpg">
@@ -6,7 +6,7 @@
 
 ## Description
 
-This provides quick access to functions provided by the amazing [YouTube-DL](https://github.com/ytdl-org/youtube-dl) application. I use this all the time to grab data from YouTube and other sources. This batch file allows you to do the following at the time of this writing with new functions added as needed.
+This provides quick access to functions provided by the amazing [YouTube-DLP](https://github.com/yt-dlp/yt-dlp) application. I use this all the time to grab data from YouTube and other sources. This batch file allows you to do the following at the time of this writing with new functions added as needed.
 
 - [ 1 ] - Audio (MP3)
 - [ 2 ] - Video (MP4)
