@@ -164,7 +164,7 @@ cls
 ECHO [ YouTube-DLP Playlist (MP3, Audio) ]
 echo.
 set /P url="Enter Audio Playlist ID or URL: "
-YouTube-DLP --rm-cache-dir -ciw -o "Z:\Music\!NewMusic\%%(playlist_index)s - %%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --yes-playlist "%url%"
+yt-dlp.exe --rm-cache-dir -ciw -o "Z:\Music\!NewMusic\%%(playlist_index)s - %%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --yes-playlist "%url%"
 pause
 goto menu
 
