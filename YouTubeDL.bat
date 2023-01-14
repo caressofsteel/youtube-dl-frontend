@@ -10,7 +10,6 @@ REM / /___/ /_/ / /  /  __(__  |__  ) /_/ / __/___/ / /_/  __/  __/ /
 REM \____/\__,_/_/   \___/____/____/\____/_/  /____/\__/\___/\___/_/   
 REM
 REM
-REM
 REM #########################################################################################
 REM
 REM YouTube-DLP Front-End
@@ -28,20 +27,20 @@ REM - Updates and Runs from %YTDLPATH%
 REM
 REM #########################################################################################
 
-REM // ENV
+:: // ENV
 SETLOCAL EnableDelayedExpansion
 SET LF=^
 
-REM // Get Last Update Timestamp(s)
+:: // Get Last Update Timestamp(s)
 for %%a in (%YTDLPATH%\yt-dlp.exe) do set YTDLDATE=%%~ta
 for %%a in (YouTubeDL.bat) do set BATCHDATE=%%~ta
 
-REM // Assign Timestamp :: Date+Time :~0,88% | Date :~0,8%
+:: // Assign Timestamp :: Date+Time :~0,88% | Date :~0,8%
 set "YTDLDATE=%YTDLDATE:~0,8%"
 set "BATCHDATE=%BATCHDATE:~0,8%"
 
-REM // Config Console Window
-REM 1(Blue), 2(Green), 3(Cyan), 4(Red), 5(Purple), 6(Yellow), 7(LGray), 8(Gray)
+:: // Config Console Window
+:: 1(Blue), 2(Green), 3(Cyan), 4(Red), 5(Purple), 6(Yellow), 7(LGray), 8(Gray)
 COLOR 6F
 MODE con:cols=89 lines=45
 SET TITLE=".: YouTube-DLP Front-End v%BATCHDATE% | EXE v%YTDLDATE% :."
