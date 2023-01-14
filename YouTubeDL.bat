@@ -15,12 +15,16 @@ REM ############################################################################
 REM
 REM YouTube-DLP Front-End
 REM 
+REM // SET BAT/EXE PATHS
+SET GITPATH=D:\Work\Github\caressofsteel\youtube-dl-frontend
+SET YTDLPATH=C:\Apps\Portable\MyApps\YouTubeDL
+REM 
 REM # YouTubeDL.bat
-REM - Edit Batch from GIT repo (%GITPATH%)
+REM - Edit Batch from %GITPATH%
 REM - Copy updates to portable apps, Run from portable apps
 REM 
 REM # YT-DLP.exe
-REM - Updates and Runs from %YTDLPATH% (C:\Apps\Portable\MyApps\YouTubeDL\)
+REM - Updates and Runs from %YTDLPATH%
 REM
 REM #########################################################################################
 
@@ -28,14 +32,11 @@ REM // ENV
 SETLOCAL EnableDelayedExpansion
 SET LF=^
 
-REM // PATHS
-SET YTDLPATH=C:\Apps\Portable\MyApps\YouTubeDL
-SET GITPATH=D:\Work\Github\caressofsteel\youtube-dl-frontend
-
 REM // Get Last Update Timestamp(s)
-:: (Date+Time = :~0,88% | Date = :~0,8%
 for %%a in (%YTDLPATH%\yt-dlp.exe) do set YTDLDATE=%%~ta
 for %%a in (YouTubeDL.bat) do set BATCHDATE=%%~ta
+
+REM // Assign Timestamp :: Date+Time :~0,88% | Date :~0,8%
 set "YTDLDATE=%YTDLDATE:~0,8%"
 set "BATCHDATE=%BATCHDATE:~0,8%"
 
@@ -92,8 +93,6 @@ REM ############################################################################
 cls
 ECHO [ YouTube-DLP (EXE UPDATE) ]
 echo.
-
-
 
 :: Update Executable
 echo Updating YT-DLP.exe in %YTDLPATH%
