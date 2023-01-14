@@ -13,20 +13,46 @@ REM
 REM
 REM #########################################################################################
 REM
-REM YouTube-DLPP Front-End
-REM	Binary located in C:\Apps\Liberkey\MyApps\YouTubeDL
-REM	Python: C:\Users\David\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages
+REM YouTube-DLP Front-End
+REM 
+REM # YouTubeDL.bat
+REM - Edit Batch from GIT repo (%GITPATH%)
+REM - Copy updates to portable apps, Run from portable apps
+REM 
+REM # YT-DLP.exe
+REM - Updates and Runs from %YTDLPATH% (C:\Apps\Portable\MyApps\YouTubeDL\)
+REM
 REM #########################################################################################
 
-SET VERSION=2022/03/12 (STILL ROCKIN' - FUCK THE RIAA/DMCA)
+REM // ENV
+SETLOCAL EnableDelayedExpansion
+SET LF=^
 
+REM // PATHS
+SET YTDLPATH=C:\Apps\Portable\MyApps\YouTubeDL
+SET GITPATH=D:\Work\Github\caressofsteel\youtube-dl-frontend
+
+REM // Get Last Update Timestamp(s)
+:: (Date+Time = :~0,88% | Date = :~0,8%
+for %%a in (%YTDLPATH%\yt-dlp.exe) do set YTDLDATE=%%~ta
+for %%a in (YouTubeDL.bat) do set BATCHDATE=%%~ta
+set "YTDLDATE=%YTDLDATE:~0,8%"
+set "BATCHDATE=%BATCHDATE:~0,8%"
+
+REM // Config Console Window
+REM 1(Blue), 2(Green), 3(Cyan), 4(Red), 5(Purple), 6(Yellow), 7(LGray), 8(Gray)
+COLOR 6F
+MODE con:cols=89 lines=45
+SET TITLE=".: YouTube-DLP Front-End v%BATCHDATE% | EXE v%YTDLDATE% :."
+
+::pause
 cls
 goto menu
 
 :menu
 cls
 echo.
-echo  .: YouTube-DLP v%VERSION% :.
+echo !TITLE:^"=!
 echo.        
 echo ### CHOOSE FORMAT ######################################################################
 echo.         
@@ -39,7 +65,7 @@ echo.
 	echo [ 7 ] - Playlist (Video, MP4)
 	echo [ 8 ] - Time Span (Video, MP4)
 	echo [ 9 ] - Video (Proxy, Best, MP4)
-	echo [ 0 ] - Update YouTube-DLP (Python)
+	echo [ 0 ] - Update (YouTubeDLP/Batch)
 	echo.
 echo ########################################################################################
 echo.
@@ -64,18 +90,22 @@ REM ############################################################################
 
 :update
 cls
-ECHO [ YouTube-DLP (Python UPDATE) ]
+ECHO [ YouTube-DLP (EXE UPDATE) ]
 echo.
 
-:: Regular Update
-yt-dlp.exe -U
 
-:: Python Update
-REM pip install --upgrade YouTube-DLP
-REM copy /y C:\Users\David\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\Scripts\yt-dlp.exe C:\Apps\LiberKey\MyApps\YouTubeDL\
 
-copy /y C:\Apps\node\yt-dlp.exe C:\Apps\LiberKey\MyApps\YouTubeDL\
-REM copy /y C:\Apps\Python\Scripts\YouTube-DLP-script.py C:\Apps\LiberKey\MyApps\YouTubeDL\
+:: Update Executable
+echo Updating YT-DLP.exe in %YTDLPATH%
+echo.
+%YTDLPATH%\yt-dlp.exe -U
+
+:: Update Batch
+echo.
+echo Copying YouTubeDL.bat from %GITPATH% 
+echo to %YTDLPATH%
+copy /y %GITPATH%\YouTubeDL.bat %YTDLPATH%
+echo.
 
 pause
 goto menu
