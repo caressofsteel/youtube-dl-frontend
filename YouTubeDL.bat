@@ -1,4 +1,3 @@
-
 @echo off
 
 REM #########################################################################################
@@ -118,15 +117,14 @@ cls
 ECHO [ YouTube-DLP Audio ]
 echo.
 
-
+:: --rm-cache-dir                   Delete all filesystem cache files
 :: -c continue (resume)
 :: -i --ignore-errors
 :: -w do not overwrite
-:: -o output
-:: -f format
 :: -x --extract-audio
+:: -f --audio-format
+:: -o output
 :: --embed-thumbnail                Embed thumbnail in the video as cover art
-:: --rm-cache-dir                   Delete all filesystem cache files
 :: https://www.youtube.com/watch?v=fpns_a4Nuvo
 
 set /P url="Enter Audio URL: "
