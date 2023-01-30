@@ -117,8 +117,20 @@ REM ############################################################################
 cls
 ECHO [ YouTube-DLP Audio ]
 echo.
+
+
+:: -c continue (resume)
+:: -i --ignore-errors
+:: -w do not overwrite
+:: -o output
+:: -f format
+:: -x --extract-audio
+:: --embed-thumbnail                Embed thumbnail in the video as cover art
+:: --rm-cache-dir                   Delete all filesystem cache files
+:: https://www.youtube.com/watch?v=fpns_a4Nuvo
+
 set /P url="Enter Audio URL: "
-yt-dlp.exe -ciw -o "Z:\Music\!NewMusic\%%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --rm-cache-dir %url%
+yt-dlp.exe --rm-cache-dir -ciw -x --audio-format mp3 --embed-thumbnail -o "Z:\Music\~NewMusic\%%(title)s.%%(ext)s" %url%
 pause
 goto menu
 
@@ -192,7 +204,7 @@ cls
 ECHO [ YouTube-DLP Playlist (MP3, Audio) ]
 echo.
 set /P url="Enter Audio Playlist ID or URL: "
-yt-dlp.exe --rm-cache-dir -ciw -o "Z:\Music\!NewMusic\%%(playlist_index)s - %%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --yes-playlist "%url%"
+yt-dlp.exe --rm-cache-dir -ciw -o "Z:\Music\~NewMusic\%%(playlist_index)s - %%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --yes-playlist "%url%"
 pause
 goto menu
 
