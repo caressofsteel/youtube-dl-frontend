@@ -24,6 +24,11 @@ REM
 REM # YT-DLP.exe
 REM - Updates and Runs from %YTDLPATH%
 REM
+REM # NOTE
+REM If a file or path contains a '!' character, you must set SETLOCAL DISABLEDELAYEDEXPANSION prior
+REM to calling yt-dlp.exe. Otherwise, it will fail with:
+REM `yt-dlp.exe: error: Cannot download a video and extract audio into the same file!`
+REM
 REM #########################################################################################
 
 :: // ENV
@@ -34,9 +39,9 @@ SET LF=^
 for %%a in (%YTDLPATH%\yt-dlp.exe) do set YTDLDATE=%%~ta
 for %%a in (YouTubeDL.bat) do set BATCHDATE=%%~ta
 
-:: // Assign Timestamp :: Date+Time :~0,88% | Date :~0,8%
-set "YTDLDATE=%YTDLDATE:~0,8%"
-set "BATCHDATE=%BATCHDATE:~0,8%"
+:: // Assign Timestamp :: Date+Time :~0,88% | Date :~0,10%
+set "YTDLDATE=%YTDLDATE:~0,10%"
+set "BATCHDATE=%BATCHDATE:~0,10%"
 
 :: // Config Console Window
 :: 1(Blue), 2(Green), 3(Cyan), 4(Red), 5(Purple), 6(Yellow), 7(LGray), 8(Gray)
@@ -45,12 +50,14 @@ MODE con:cols=89 lines=45
 SET TITLE=".: YouTube-DLP Front-End v%BATCHDATE% | EXE v%YTDLDATE% :."
 
 ::pause
+
 cls
 goto menu
 
 :menu
 cls
 echo.
+SETLOCAL EnableDelayedExpansion
 echo !TITLE:^"=!
 echo.        
 echo ### CHOOSE FORMAT ######################################################################
@@ -117,18 +124,10 @@ cls
 ECHO [ YouTube-DLP Audio ]
 echo.
 
-:: --rm-cache-dir                   Delete all filesystem cache files
-:: -c continue (resume)
-:: -i --ignore-errors
-:: -w do not overwrite
-:: -x --extract-audio
-:: -f --audio-format
-:: -o output
-:: --embed-thumbnail                Embed thumbnail in the video as cover art
-:: https://www.youtube.com/watch?v=fpns_a4Nuvo
-
+SETLOCAL DISABLEDELAYEDEXPANSION
 set /P url="Enter Audio URL: "
-yt-dlp.exe --rm-cache-dir -ciw -x --audio-format mp3 --embed-thumbnail -o "Z:\Music\~NewMusic\%%(title)s.%%(ext)s" %url%
+yt-dlp.exe --rm-cache-dir -ciw -x --audio-format mp3 --embed-thumbnail -o "Z:\Music\!NewMusic\%%(title)s.%%(ext)s" %url%
+
 pause
 goto menu
 
@@ -141,8 +140,11 @@ REM ############################################################################
 cls
 ECHO [ YouTube-DLP Video ]
 echo.
+
+SETLOCAL DISABLEDELAYEDEXPANSION
 set /P url="Enter Video URL: "
 yt-dlp.exe --rm-cache-dir -ciw -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
+
 pause
 goto menu
 
@@ -155,8 +157,11 @@ REM ############################################################################
 cls
 ECHO [ YouTube-DLP (4K, MP4) ]
 echo.
+
+SETLOCAL DISABLEDELAYEDEXPANSION
 set /P url="Enter Video URL: "
 yt-dlp.exe --rm-cache-dir -ciw --format "bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
+
 pause
 goto menu
 
@@ -169,12 +174,15 @@ REM ############################################################################
 cls
 ECHO [ YouTube-DLP Video (Choose Format) ]
 echo.
+
+SETLOCAL DISABLEDELAYEDEXPANSION
 set /P url="Enter Video URL: "
 yt-dlp.exe -F %url%
 pause
 set /p vformat="Enter Video Code: "
 set /p aformat="Enter Audio Code: "
 yt-dlp.exe --rm-cache-dir -ciw -f "%vformat%+%aformat%" --download-archive D:\Downloads\downloaded.txt --merge-output-format mp4 -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
+
 pause
 goto menu
 
@@ -187,8 +195,11 @@ REM ############################################################################
 cls
 ECHO [ YouTube-DLP Channel (MP4) ]
 echo.
+
+SETLOCAL DISABLEDELAYEDEXPANSION
 set /P url="Enter Channel URL: "
 yt-dlp.exe --rm-cache-dir -ciw -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "D:\Temp\YouTubeDL\%%(title)s.%%(ext)s" --download-archive "D:\Temp\YouTubeDL\downloaded.txt" -v %url%
+
 pause
 goto menu
 
@@ -201,8 +212,11 @@ REM ############################################################################
 cls
 ECHO [ YouTube-DLP Playlist (MP3, Audio) ]
 echo.
+
+SETLOCAL DISABLEDELAYEDEXPANSION
 set /P url="Enter Audio Playlist ID or URL: "
-yt-dlp.exe --rm-cache-dir -ciw -o "Z:\Music\~NewMusic\%%(playlist_index)s - %%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --yes-playlist "%url%"
+yt-dlp.exe --rm-cache-dir -ciw -o "Z:\Music\!NewMusic\%%(playlist_index)s - %%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --yes-playlist "%url%"
+
 pause
 goto menu
 
@@ -215,8 +229,9 @@ REM ############################################################################
 cls
 ECHO [ YouTube-DLP Playlist (MP4, Video) ]
 echo.
-set /P url="Enter Video Playlist ID or URL: "
 
+SETLOCAL DISABLEDELAYEDEXPANSION
+set /P url="Enter Video Playlist ID or URL: "
 yt-dlp.exe --rm-cache-dir -ciw -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "D:\Downloads\YouTubeDL\%%(playlist_index)s - %%(title)s.%%(ext)s" --download-archive "D:\Temp\YouTubeDL\downloaded.txt" -v --yes-playlist "%url%"
 
 REM yt-dlp.exe --rm-cache-dir -ciw -S res:720 -S ext:mp4 -o "D:\Downloads\YouTubeDL\%%(playlist_index)s - %%(title)s.%%(ext)s" --download-archive "D:\Temp\YouTubeDL\downloaded.txt" -v --yes-playlist "%url%"
@@ -233,10 +248,11 @@ REM ############################################################################
 cls
 ECHO [ YouTube-DLP TimeSpan (MP4) ]
 echo.
+
+SETLOCAL DISABLEDELAYEDEXPANSION
 set /P url="Enter Timespan Video URL: "
 set /P time_start="Enter Start Time: "
 set /P time_end="Enter End Time: "
-
 echo.
 yt-dlp.exe --rm-cache-dir -ciw --format "bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 --download-sections "*%time_start%-%time_end%" -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
 
@@ -253,6 +269,7 @@ cls
 ECHO [ YouTube-DLP (Proxy, 4K, MP4) ]
 echo.
 
+SETLOCAL DISABLEDELAYEDEXPANSION
 set /P url="Enter Video URL: "
 yt-dlp.exe --rm-cache-dir -ciw --proxy socks5://185.206.224.39:80 --format "bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
 
