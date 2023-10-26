@@ -64,14 +64,14 @@ echo ### CHOOSE FORMAT #########################################################
 echo.         
 	echo [ 1 ] - Audio (MP3)
 	echo [ 2 ] - Video (MP4)
-	echo [ 3 ] - Video (Best, MP4)
+	echo [ 3 ] - Video (MP4) HQ/BEST
 	echo [ 4 ] - Video (Choose Format)
-	echo [ 5 ] - Channel (Video, MP4)
-	echo [ 6 ] - Playlist (Audio, MP3)
-	echo [ 7 ] - Playlist (Video, MP4)
-	echo [ 8 ] - Time Span (Video, MP4)
-	echo [ 9 ] - Video (Proxy, Best, MP4)
-	echo [ 0 ] - Update (YouTubeDLP/Batch)
+	echo [ 5 ] - Channel (MP4)
+	echo [ 6 ] - Playlist (MP3, 160K)
+	echo [ 7 ] - Playlist (MP4)
+	echo [ 8 ] - Time Span (MP4)
+	echo [ 9 ] - Video Proxy (Socks5, MP4)
+	echo [ 0 ] - Update YT-DLP (YouTubeDLP/Batch)
 	echo.
 echo ########################################################################################
 echo.
@@ -102,7 +102,8 @@ echo.
 :: Update Executable
 echo Updating YT-DLP.exe in %YTDLPATH%
 echo.
-%YTDLPATH%\yt-dlp.exe -U
+REM %YTDLPATH%\yt-dlp.exe -U
+%YTDLPATH%\yt-dlp.exe --update-to nightly
 
 :: Update Batch
 echo.
@@ -121,12 +122,12 @@ REM ############################################################################
 
 :download_audio
 cls
-ECHO [ YouTube-DLP Audio ]
+ECHO [ YouTube-DLP Audio (MP3) ]
 echo.
 
 SETLOCAL DISABLEDELAYEDEXPANSION
 set /P url="Enter Audio URL: "
-yt-dlp.exe --rm-cache-dir -ciw -x --audio-format mp3 --embed-thumbnail -o "Z:\Music\!NewMusic\%%(title)s.%%(ext)s" %url%
+yt-dlp.exe --rm-cache-dir -ciw -x --audio-format mp3 --embed-thumbnail -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
 
 pause
 goto menu
@@ -138,7 +139,7 @@ REM ############################################################################
 
 :download_video
 cls
-ECHO [ YouTube-DLP Video ]
+ECHO [ YouTube-DLP Video (MP4) ]
 echo.
 
 SETLOCAL DISABLEDELAYEDEXPANSION
@@ -155,12 +156,12 @@ REM ############################################################################
 
 :download_video_best
 cls
-ECHO [ YouTube-DLP (4K, MP4) ]
+ECHO [ YouTube-DLP Video (MP4 HQ/BEST) ]
 echo.
 
 SETLOCAL DISABLEDELAYEDEXPANSION
 set /P url="Enter Video URL: "
-yt-dlp.exe --rm-cache-dir -ciw --format "bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
+yt-dlp.exe --verbose --rm-cache-dir -ciw --format "bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
 
 pause
 goto menu
@@ -193,7 +194,7 @@ REM ############################################################################
 
 :download_channel
 cls
-ECHO [ YouTube-DLP Channel (MP4) ]
+ECHO [ YouTube-DLP Channel (MP4 Video) ]
 echo.
 
 SETLOCAL DISABLEDELAYEDEXPANSION
@@ -210,12 +211,24 @@ REM ############################################################################
 
 :download_playlist
 cls
-ECHO [ YouTube-DLP Playlist (MP3, Audio) ]
+ECHO [ YouTube-DLP Playlist (MP3 160K) ]
 echo.
+
+:: todo
+:: ask range (1-###)
+:: ask format (mp3, m4a, opus)
 
 SETLOCAL DISABLEDELAYEDEXPANSION
 set /P url="Enter Audio Playlist ID or URL: "
-yt-dlp.exe --rm-cache-dir -ciw -o "Z:\Music\!NewMusic\%%(playlist_index)s - %%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --yes-playlist "%url%"
+
+yt-dlp.exe --rm-cache-dir -ciw -o "D:\Downloads\%%(playlist_index)s - %%(title)s.%%(ext)s" -x --audio-format mp3 --embed-thumbnail --yes-playlist "%url%"
+
+::yt-dlp --rm-cache-dir --ignore-errors -ciw --format bestaudio --extract-audio --audio-format mp3 --audio-quality 160K --output "Z:\Music\!NewMusic\%%(playlist_index)s - %%(title)s.%%(ext)s" --yes-playlist "%url%"
+
+::yt-dlp --format bestaudio --extract-audio --audio-format mp3 --audio-quality 160K --output "Z:\Music\!NewMusic\%%(playlist_index)s - %%(title)s.%%(ext)s" --yes-playlist --playlist-start 1 --playlist-end 3 "%url%"
+
+REM OPUS FORMAT
+::yt-dlp --format bestaudio --extract-audio --audio-quality 160K --output "Z:\Music\!NewMusic\%%(playlist_index)s - %%(title)s.%%(ext)s" --yes-playlist "%url%"
 
 pause
 goto menu
@@ -227,7 +240,7 @@ REM ############################################################################
 
 :download_playlist_video
 cls
-ECHO [ YouTube-DLP Playlist (MP4, Video) ]
+ECHO [ YouTube-DLP Playlist (MP4 Video) ]
 echo.
 
 SETLOCAL DISABLEDELAYEDEXPANSION
@@ -246,7 +259,7 @@ REM ############################################################################
 
 :download_timespan
 cls
-ECHO [ YouTube-DLP TimeSpan (MP4) ]
+ECHO [ YouTube-DLP TimeSpan (MP4 Video) ]
 echo.
 
 SETLOCAL DISABLEDELAYEDEXPANSION
@@ -266,12 +279,13 @@ REM ############################################################################
 
 :download_video_best_proxy
 cls
-ECHO [ YouTube-DLP (Proxy, 4K, MP4) ]
+ECHO [ YouTube-DLP Socks5 Proxy (4K/MP4 Video) ]
 echo.
 
 SETLOCAL DISABLEDELAYEDEXPANSION
 set /P url="Enter Video URL: "
-yt-dlp.exe --rm-cache-dir -ciw --proxy socks5://185.206.224.39:80 --format "bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
+echo DEPRECATED
+::yt-dlp.exe --rm-cache-dir -ciw --proxy socks5://185.206.224.39:80 --format "bestvideo+bestaudio[ext=m4a]/bestvideo+bestaudio/best" --merge-output-format mp4 -o "D:\Downloads\%%(title)s.%%(ext)s" %url%
 
 pause
 goto menu
